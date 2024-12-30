@@ -994,7 +994,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				end
 				return LabelFunction
 			end
-			function ElementFunction:ColoredAddLabel(Text, ToChangeColor)
+			function ElementFunction:ColoredAddLabel(Text, ToChangeColor, Position)
 				local LabelFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 5), {
 					Size = UDim2.new(1, 0, 0, 30),
 					BackgroundTransparency = 0.7,
@@ -1010,17 +1010,36 @@ function OrionLib:MakeWindow(WindowConfig)
 				}), "Second")
 			
 				local LabelFunction2 = {}
+				local TweenService = game:GetService("TweenService")
 			
-				function LabelFunction2:Set(ToChange, ToChangeColor)
+				function LabelFunction2:Set(ToChange, ToChangeColor, Position)
 					LabelFrame.Content.Text = ToChange
+			
 					if ToChangeColor then
 						LabelFrame.Content.TextColor3 = ToChangeColor
 					else
 						LabelFrame.Content.TextColor3 = Color3.fromRGB(255, 255, 255)
 					end
+					
+					local targetPosition
+					if Position == "Left" then
+						targetPosition = UDim2.new(0, 12, 0, 0)
+					elseif Position == "Center" then
+						targetPosition = UDim2.new(0.5, -LabelFrame.Content.TextBounds.X / 2, 0, 0)
+					elseif Position == "Right" then
+						targetPosition = UDim2.new(1, -LabelFrame.Content.TextBounds.X - 12, 0, 0)
+					else
+						targetPosition = UDim2.new(0.5, -LabelFrame.Content.TextBounds.X / 2, 0, 0)
+					end
+			
+					local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+					local tweenGoal = {Position = targetPosition}
+					local tween = TweenService:Create(LabelFrame.Content, tweenInfo, tweenGoal)
+			
+					tween:Play()
 				end
 			
-				LabelFunction2:Set(Text, ToChangeColor)
+				LabelFunction2:Set(Text, ToChangeColor, Position)
 			
 				return LabelFunction2
 			end
