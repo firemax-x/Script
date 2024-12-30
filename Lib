@@ -1009,9 +1009,9 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(MakeElement("Stroke"), "Stroke")
 				}), "Second")
 			
-				local LabelFunction = {}
+				local LabelFunction2 = {}
 			
-				function LabelFunction:Set(ToChange, ToChangeColor)
+				function LabelFunction2:Set(ToChange, ToChangeColor)
 					LabelFrame.Content.Text = ToChange
 					if ToChangeColor then
 						LabelFrame.Content.TextColor3 = ToChangeColor
@@ -1020,9 +1020,9 @@ function OrionLib:MakeWindow(WindowConfig)
 					end
 				end
 			
-				LabelFunction:Set(Text, ToChangeColor)
+				LabelFunction2:Set(Text, ToChangeColor)
 			
-				return LabelFunction
+				return LabelFunction2
 			end
 			function ElementFunction:AddParagraph(Text, Content)
 				Text = Text or "Text"
