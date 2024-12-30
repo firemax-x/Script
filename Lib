@@ -995,7 +995,6 @@ function OrionLib:MakeWindow(WindowConfig)
 				return LabelFunction
 			end
 			function ElementFunction:ColoredAddLabel(Text, Color)
-				-- Criação do LabelFrame como no exemplo original
 				local LabelFrame = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 5), {
 					Size = UDim2.new(1, 0, 0, 30),
 					BackgroundTransparency = 0.7,
@@ -1012,17 +1011,15 @@ function OrionLib:MakeWindow(WindowConfig)
 			
 				local LabelFunction = {}
 			
-				-- Verifica se foi passada uma cor, se sim, aplica, se não, usa a cor padrão
 				function LabelFunction:Set(ToChange)
 					LabelFrame.Content.Text = ToChange
 					if Color then
 						LabelFrame.Content.TextColor3 = Color
 					else
-						LabelFrame.Content.TextColor3 = Color3.fromRGB(0, 0, 0) -- Cor padrão, pode ser alterada conforme necessário
+						LabelFrame.Content.TextColor3 = Color3.fromRGB(255, 255, 255)
 					end
 				end
 			
-				-- Inicializa o texto e aplica a cor caso tenha sido passada
 				LabelFunction:Set(Text)
 			
 				return LabelFunction
