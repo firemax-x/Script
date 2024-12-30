@@ -1006,7 +1006,9 @@ function OrionLib:MakeWindow(WindowConfig)
 						Position = UDim2.new(0, 12, 0, 0),
 						Font = Enum.Font.GothamBold,
 						Name = "Content",
-						TextColor3 = cor  -- Aplica a cor passada como parâmetro
+						if cor then
+							TextColor3 = cor
+						end  -- Aplica a cor passada como parâmetro
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke")
 				}), "Second")
