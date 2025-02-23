@@ -3,7 +3,7 @@ This documentation is for the stable release of Orion Library.
 
 ## Booting the Library
 ```lua
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/firemax-x/Script/refs/heads/main/Lib')))()
 ```
 
 
