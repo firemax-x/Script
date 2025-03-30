@@ -297,3 +297,24 @@ Config files are made for every game the library is launched in.
 ```lua
 OrionLib:Destroy()
 ```
+
+## Combos
+
+```lua
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/firemax-x/Script/refs/heads/main/Lib')))()
+
+local Tab = Window:MakeTab({
+	Name = "Tab 1",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+```
+### This Can save u Alot Of time when ur Testing Stuff
