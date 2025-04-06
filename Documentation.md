@@ -311,11 +311,15 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+Tab:AddMouseModeDropdown()
+
+Tab:AddSection({Name = ""})
+
 Tab:AddToggle({
 	Name = "This is a toggle!",
 	Default = false,
 	Callback = function(Value)
-		print(Value)
+        
 	end    
 })
 ```
