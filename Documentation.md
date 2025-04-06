@@ -303,7 +303,7 @@ OrionLib:Destroy()
 ```lua
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/firemax-x/Script/refs/heads/main/Lib')))()
 
-local Window = OrionLib:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Test", IntroText = "Test", IntroIcon = "rbxassetid://134867074334684", HidePremium = false, SaveConfig = true, ConfigFolder = "Test", FreeMouse = true, SearchBar = ""})
 
 local Tab = Window:MakeTab({
 	Name = "Tab 1",
