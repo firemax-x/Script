@@ -236,34 +236,165 @@ Bind:Set(Enum.KeyCode.E)
 
 
 ## Creating a Dropdown menu
+
+### Basic Dropdown (Single Selection)
 ```lua
 Tab:AddDropdown({
 	Name = "Dropdown",
-	Default = "1",
-	Options = {"1", "2"},
+	Default = "",
+	Options = {"Option1", "Option2", "Option3"},
 	Callback = function(Value)
-		print(Value)
+		print("Selected:", Value)
 	end    
 })
+```
 
+### Multi-Selection Dropdown
+```lua
+Tab:AddDropdown({
+	Name = "Multi Dropdown", 
+	Default = {},
+	Multi = true,
+	Options = {"Option1", "Option2", "Option3"},
+	Callback = function(Value)
+		-- Value is a table for multi dropdowns
+		if type(Value) == "table" then
+			print("Selected options:", table.concat(Value, ", "))
+		end
+	end    
+})
+```
+
+### Searchable Dropdown
+```lua
+Tab:AddDropdown({
+	Name = "Searchable Dropdown",
+	Default = "",
+	Options = {"Player1", "Player2", "Player3"},
+	Searchable = true,
+	Callback = function(Value)
+		print("Selected:", Value)
+	end    
+})
+```
+
+### Player Dropdown (Auto-detects players and shows avatars)
+```lua
+Tab:AddDropdown({
+	Name = "Select Player",
+	Default = "",
+	Options = {"PlayerName (DisplayName)", "Player2 (Display2)"},
+	Callback = function(Value)
+		local playerName = Value:match("^(.-) %(") or Value
+		local player = game.Players:FindFirstChild(playerName)
+		if player then
+			print("Selected player:", player.Name)
+		end
+	end    
+})
+```
+
+### Grouped Dropdown
+```lua
+Tab:AddDropdown({
+	Name = "Grouped Dropdown",
+	Default = "",
+	Grouped = true,
+	Options = {
+		["Weapons"] = {"Sword", "Bow", "Staff"},
+		["Tools"] = {"Hammer", "Pickaxe", "Shovel"}
+	},
+	Callback = function(Value)
+		print("Selected:", Value)
+	end    
+})
+```
+
+**Parameters:**
+```lua
 --[[
-Name = <string> - The name of the dropdown.
-Default = <string> - The default value of the dropdown.
-Options = <table> - The options in the dropdown.
-Callback = <function> - The function of the dropdown.
+Name = <string> - The name of the dropdown
+Default = <string> | <table> - Default value ("" for single, {} for multi)
+Options = <table> - The options in the dropdown
+Multi = <boolean> - Enable multi-selection (default: false)
+Searchable = <boolean> - Enable search functionality (default: false)  
+Grouped = <boolean> - Enable grouped options (default: false)
+Icons = <boolean> - Enable icon support (default: false)
+MaxHeight = <number> - Maximum dropdown height in pixels (default: 200)
+Callback = <function> - Function called when selection changes
+Flag = <string> - Save flag for configuration
+Save = <boolean> - Whether to save selection (default: false)
 ]]
 ```
 
-### Adding a set of new Dropdown buttons to an existing menu
+## Managing Dropdown Options
+
+### Adding new options to existing dropdown
 ```lua
-Dropdown:Refresh(List<table>,true)
+Dropdown:Refresh(NewOptions, DeleteOld)
+```
+- `NewOptions` - Table of new options
+- `DeleteOld` - Boolean: true = replace all options, false = add to existing
+
+**Examples:**
+```lua
+-- Replace all options
+Dropdown:Refresh({"NewOption1", "NewOption2"}, true)
+
+-- Add to existing options  
+Dropdown:Refresh({"AdditionalOption"}, false)
 ```
 
-The above boolean value "true" is whether or not the current buttons will be deleted.
-### Selecting a dropdown option
+## Setting Dropdown Values
+
+### Single Selection Dropdown
 ```lua
-Dropdown:Set("dropdown option")
+Dropdown:Set("option name")
 ```
+
+### Multi-Selection Dropdown  
+```lua
+-- Set multiple selections
+Dropdown:Set({"option1", "option2"})
+
+-- Clear all selections
+Dropdown:Set({})
+```
+
+### Avoiding Callback Loops
+```lua
+-- If your callback calls Set(), use a flag to prevent infinite loops:
+local isResetting = false
+
+Tab:AddDropdown({
+	Name = "Dropdown",
+	Default = "",
+	Options = {"Option1", "Option2"},
+	Callback = function(Value)
+		if isResetting then return end
+		
+		if someCondition then
+			isResetting = true
+			Dropdown:Set("")  -- Reset without triggering callback loop
+			isResetting = false
+		end
+	end
+})
+```
+
+## Special Features
+
+### Player Detection
+The dropdown automatically detects player formats like `"PlayerName (DisplayName)"` and:
+- Shows player avatars
+- Displays username and display name separately  
+- Uses enhanced player layout (60px height vs 28px standard)
+
+### Search Functionality
+When `Searchable = true`:
+- Search box appears when dropdown is opened
+- Filters options in real-time
+- Supports searching display names and usernames for player dropdowns
 
 # Finishing your script (REQUIRED)
 The below function needs to be added at the end of your code.
